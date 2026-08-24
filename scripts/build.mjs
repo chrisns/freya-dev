@@ -9,6 +9,7 @@ import { dirname, join } from "node:path";
 
 const OWNER = "chrisns";
 const TOPIC = "freya-game";
+const SELF = "freya-dev"; // never list this hub as one of its own games
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const token = process.env.GITHUB_TOKEN;
@@ -73,8 +74,9 @@ async function main() {
     `/search/repositories?q=user:${OWNER}+topic:${TOPIC}&sort=updated&per_page=100`
   );
   // Archived repos still get listed — archiving just means "finished", not
-  // "not a game" — the Pages site under it keeps working. Forks are excluded.
-  const repos = (search?.items || []).filter((r) => !r.fork);
+  // "not a game" — the Pages site under it keeps working. Forks and this
+  // hub's own repo are excluded.
+  const repos = (search?.items || []).filter((r) => !r.fork && r.name !== SELF);
 
   const games = [];
   for (const r of repos) {
