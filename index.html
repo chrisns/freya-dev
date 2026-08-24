@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freya's Games</title>
+<meta name="description" content="A hub of browser games designed by Freya, age 7.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+<!-- Typography + spacing tokens from the CNS design system (github.com/chrisns/design),
+     served through jsDelivr so it comes back as real text/css (raw.githubusercontent.com
+     serves .css as text/plain, which browsers refuse to load as a stylesheet).
+     Only tokens.css is linked — it is pure custom properties, no element rules —
+     so Freya's own colours below are what actually paint the page. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/chrisns/design@main/tokens.css">
+<style>
+  :root{
+    --blue:#4FC3F7; --purple:#BA68C8; --pink:#F06292; --green:#66BB6A;
+    --deep:#0a1f3d; --deep2:#150a30;
+    --card-bg:#ffffff10; --card-border:#ffffff22;
+    --r-card: 22px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; min-height:100%;}
+  body{
+    font-family: var(--font-body, "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif);
+    color:#fff;
+    background:
+      radial-gradient(60vw 60vw at 12% -10%, #4FC3F733, transparent 60%),
+      radial-gradient(60vw 60vw at 110% 10%, #BA68C833, transparent 60%),
+      radial-gradient(70vw 70vw at 50% 120%, #F0629233, transparent 60%),
+      linear-gradient(160deg, var(--deep), var(--deep2));
+    min-height:100vh;
+  }
+  .wrap{max-width: var(--maxw-page, 1320px); margin:0 auto; padding: clamp(20px, 5vw, 64px);}
+
+  header{text-align:center; margin-bottom: clamp(28px, 6vw, 56px);}
+  .eyebrow{
+    display:inline-block; font-family: var(--font-body); font-weight:700;
+    letter-spacing: var(--tr-eyebrow, .18em); text-transform:uppercase;
+    font-size: var(--t-sm, .875rem); color:#fff; opacity:.75; margin-bottom:10px;
+  }
+  h1{
+    font-family: var(--font-display, "Fraunces", serif);
+    font-weight: var(--w-black, 900);
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    line-height:1.03; margin:0 0 14px;
+    background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink),var(--green));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 6px 0 #0004);
+    animation: hue 6s linear infinite;
+  }
+  @keyframes hue{ to { filter:hue-rotate(360deg) drop-shadow(0 6px 0 #0004); } }
+  header p{font-size:clamp(1rem, 2vw, 1.2rem); opacity:.85; max-width:620px; margin:0 auto;}
+
+  .grid{
+    display:grid; gap: clamp(18px, 3vw, 32px);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .card{
+    display:flex; flex-direction:column;
+    background: var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius: var(--r-card);
+    overflow:hidden; text-decoration:none; color:#fff;
+    backdrop-filter: blur(6px);
+    transition: transform var(--dur, 220ms) var(--ease-pop, cubic-bezier(.34,1.56,.64,1)),
+                box-shadow var(--dur, 220ms) ease, border-color var(--dur, 220ms) ease;
+  }
+  .card:hover, .card:focus-visible{
+    transform: translateY(-6px) scale(1.02);
+    border-color:#ffffff55;
+    box-shadow: 0 20px 40px -16px #000a, 0 0 0 3px var(--pink);
+  }
+  .thumb{aspect-ratio:16/10; background:#00000030; overflow:hidden;}
+  .thumb img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s var(--ease-out, ease);}
+  .card:hover .thumb img{transform:scale(1.06);}
+  .card-body{padding: clamp(16px,2.5vw,22px); display:flex; flex-direction:column; gap:8px; flex:1;}
+  .card-body h2{
+    font-family: var(--font-display, "Fraunces", serif);
+    font-size: var(--t-xl, 1.75rem); font-weight:800; margin:0;
+  }
+  .card-body p{margin:0; opacity:.85; font-size: var(--t-base, 1rem); line-height:1.5; flex:1;}
+  .play{
+    align-self:flex-start; margin-top:6px; font-weight:700;
+    padding:8px 16px; border-radius: var(--r-pill, 999px);
+    background:linear-gradient(90deg,var(--pink),var(--purple)); color:#fff;
+    font-size: var(--t-sm, .875rem);
+  }
+
+  .empty{text-align:center; opacity:.7; font-size:1.1rem; grid-column:1/-1; padding:40px;}
+
+  footer{
+    text-align:center; margin-top: clamp(40px, 8vw, 80px);
+    opacity:.6; font-size: var(--t-sm, .875rem); line-height:1.8;
+  }
+  footer a{color:inherit;}
+
+  @media (prefers-reduced-motion: reduce){ h1{animation:none;} .card{transition:none;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">🎮 Freya's Game World</span>
+    <h1>Freya's Games</h1>
+    <p>Browser games designed by Freya, age 7. Pick one and play &mdash; every game opens in a new tab.</p>
+  </header>
+
+  <main class="grid">
+        <a class="card" href="https://chrisns.github.io/freya-axolotl-game/" target="_blank" rel="noopener">
+          <div class="thumb"><img src="https://raw.githubusercontent.com/chrisns/freya-axolotl-game/main/screenshots/gameplay.jpg" alt="Axolotl World screenshot" loading="lazy"></div>
+          <div class="card-body">
+            <h2>Axolotl World</h2>
+            <p>A browser game designed by Freya, age 7. Swim an axolotl through 11 levels, dodge poisonous seaweed and red fish, collect prizes, and catch the secret Tadpole.</p>
+            <span class="play">Play now &rarr;</span>
+          </div>
+        </a>
+        <a class="card" href="https://chrisns.github.io/freya-fishgame/" target="_blank" rel="noopener">
+          <div class="thumb"><img src="https://raw.githubusercontent.com/chrisns/freya-fishgame/main/screenshots/gameplay.png" alt="Squishy Fish — by Freya Nesbitt-Smith screenshot" loading="lazy"></div>
+          <div class="card-body">
+            <h2>Squishy Fish — by Freya Nesbitt-Smith</h2>
+            <p>Squishy Fish — a browser game by Freya Nesbitt-Smith (age 7¼)</p>
+            <span class="play">Play now &rarr;</span>
+          </div>
+        </a>
+  </main>
+
+  <footer>
+    <p>2 game(s) &middot; rebuilt automatically every night from every
+    <a href="https://github.com/chrisns?tab=repositories&q=&type=&language=&sort=" target="_blank" rel="noopener">chrisns</a>
+    repo tagged <code>freya-game</code></p>
+    <p>Last built 2026-08-24T09:07:08.087Z</p>
+  </footer>
+</div>
+</body>
+</html>
